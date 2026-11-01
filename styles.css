@@ -568,3 +568,51 @@ html.lenis,html.lenis body{height:auto}
 .wrload__art{border-radius:50%}
 .wrload__x{border-radius:50%}
 @media(max-width:900px){.rp-means__img{border-radius:0}}
+
+/* footer: headline first, columns kept clear of the floating product card */
+.footer{padding-top:clamp(48px,6vw,90px)}
+.footer__mark{white-space:normal;font-size:clamp(40px,6vw,108px);margin:0 0 clamp(40px,5vw,72px);text-align:left}
+.footer__main{display:grid;grid-template-columns:minmax(260px,1fr) 1.3fr;gap:clamp(32px,5vw,80px);padding:clamp(36px,4vw,56px) 0;border-top:1px solid rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.2)}
+.footer__cols{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:clamp(28px,4vw,64px)}
+.footer__legal{text-align:left;padding:22px 0 30px}
+@media(min-width:901px){
+  /* the fixed product card sits bottom-right: reserve its width */
+  .footer__main,.footer__legal{margin-right:calc(370px + 20px - var(--pad))}
+}
+@media(max-width:900px){.footer__main{grid-template-columns:1fr}.footer__cols{grid-template-columns:1fr 1fr}}
+.footer__mark{white-space:nowrap;line-height:.9;letter-spacing:-.01em}
+.footer__mark span{display:inline-block}
+
+/* footer, Jolie layout: columns + signup, then edge-to-edge headline, then legal */
+.footer{padding-top:clamp(40px,4vw,64px)}
+.footer__main{display:grid;grid-template-columns:1fr 1fr 1fr 1.5fr;gap:clamp(24px,3vw,48px);padding:0;border:0;margin:0}
+.footer nav{font-size:clamp(15px,1.25vw,19px);gap:12px}
+.footer h5{margin-bottom:14px}
+.footer__news h4{font-size:clamp(30px,2.6vw,40px);margin-bottom:18px}
+.footer__form2{display:grid;grid-template-columns:1fr 1fr;border:1px solid rgba(255,255,255,.3)}
+.footer__form2 input{background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.3);padding:18px 20px;color:#fff;outline:0;font-size:15px}
+.footer__form2 input:first-child{border-right:1px solid rgba(255,255,255,.3)}
+.footer__form2 input::placeholder{color:rgba(255,255,255,.6)}
+.footer__form2 .full{grid-column:1/-1}
+.footer__form2 button{background:var(--cream);color:var(--ink);padding:18px;font-size:15px}
+.footer__form2 button:hover{background:#fff}
+.footer__fine{font-size:12px;opacity:.65;margin-top:14px;max-width:none}
+.footer__mark{margin:clamp(56px,8vw,130px) 0 10px;text-align:left}
+.footer__legal{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:6px 0 26px;font-size:14px;opacity:.8;margin:0}
+.footer__legal span:last-child{display:flex;gap:40px}
+.footer__legal a:hover{color:#b9cfc6}
+@media(min-width:901px){.footer__main,.footer__legal{margin-right:0}}
+@media(max-width:900px){.footer__main{grid-template-columns:1fr 1fr}.footer__news{grid-column:1/-1}}
+
+/* mobile polish */
+html{overflow-x:clip}
+.footer__form2 input,.footer__form2 button{min-width:0;width:100%}
+@media(max-width:600px){
+  .footer__form2{grid-template-columns:1fr}
+  .footer__form2 input:first-child{border-right:0}
+  .footer__legal{flex-direction:column;align-items:flex-start;gap:10px}
+  .footer__legal span:last-child{gap:22px}
+  .footer__mark{margin-top:56px}
+}
+/* clip (not hidden) so body never becomes a scroll container: keeps position:sticky working */
+html,body{overflow-x:clip}

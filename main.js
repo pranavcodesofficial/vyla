@@ -64,21 +64,22 @@ const CHROME_TOP = `
 </aside>`;
 const CHROME_BOTTOM = `
 <footer class="footer">
-  <ul class="footer__usp"><li>Free returns within 60 days</li><li>Pure water, brighter you</li><li>Free shipping</li></ul>
   <div class="footer__main">
+    <nav><h5>Shop</h5><a href="product.html?f=brass">The Filtered Showerhead</a><a href="product.html?f=refill">The Replacement Filter</a><a href="shop.html">All finishes</a></nav>
+    <nav><h5>Support</h5><a href="policy.html#contact">Contact us</a><a href="policy.html#shipping">Shipping &amp; returns</a><a href="faq.html">FAQ</a><a href="water-report.html">Water report</a><a href="education.html">Education</a></nav>
+    <nav><h5>Social</h5><a href="#">Instagram</a><a href="#">YouTube</a></nav>
     <div class="footer__news">
       <h4 class="display">Stay in the flow</h4>
-      <p>Water notes, rituals and early access. No noise.</p>
-      <form class="footer__form" onsubmit="event.preventDefault();this.querySelector('button').textContent='Thank you';">
-        <input type="email" placeholder="Email address" aria-label="Email address" required><button>Subscribe</button>
+      <form class="footer__form2" onsubmit="event.preventDefault();this.querySelector('button').textContent='Thank you';">
+        <input placeholder="Name*" aria-label="Name" required><input type="tel" placeholder="Phone number" aria-label="Phone number">
+        <input class="full" type="email" placeholder="Email address*" aria-label="Email address" required>
+        <button class="full">Join our list</button>
       </form>
+      <p class="footer__fine">Water notes, rituals and early access. No noise. Unsubscribe anytime.</p>
     </div>
-    <nav><h5>Shop</h5><a href="product.html?f=brass">The Vyla Filtered Showerhead</a><a href="product.html?f=refill">Replacement Filter</a><a href="shop.html">All finishes</a></nav>
-    <nav><h5>Learn</h5><a href="education.html">Education</a><a href="water-report.html">Water report</a><a href="faq.html">FAQ</a></nav>
-    <nav><h5>Company</h5><a href="policy.html#contact">Contact</a><a href="policy.html#shipping">Shipping &amp; returns</a><a href="policy.html#privacy">Privacy</a><a href="policy.html#terms">Terms</a></nav>
   </div>
-  <p class="footer__mark display" aria-hidden="true">Beauty starts from step zero</p>
-  <p class="footer__legal">© 2026 Vyla. All rights reserved.</p>
+  <p class="footer__mark display" aria-hidden="true"><span>Beauty starts from step zero</span></p>
+  <div class="footer__legal"><span>© 2026 Vyla</span><span><a href="policy.html#terms">Terms + Conditions</a><a href="policy.html#privacy">Privacy Policy</a></span></div>
 </footer>
 <a href="product.html?f=brass" class="mini" id="mini"><img src="assets/img/filter-thumb.jpg" alt=""><span><b>The Vyla Brass Filter</b><em>Polished Brass</em><i>Rs. 4,999</i></span></a>
 <div class="scrim" id="scrim"></div>
@@ -211,7 +212,7 @@ const wrPage = $('#wrPageForm');
 
 /* ---------- mini card ---------- */
 const mini = $('#mini');
-function miniState() { mini.classList.toggle('is-on', document.body.classList.contains('is-ready') && !location.pathname.endsWith('product.html'));
+function miniState() { const ft = $('.footer').getBoundingClientRect().top < innerHeight - 40; mini.classList.toggle('is-on', document.body.classList.contains('is-ready') && !ft && !location.pathname.endsWith('product.html'));
   // white text while the card floats over a photo, dark text over light sections
   const r = mini.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
   const overPhoto = $$('.hero,.split2,.fq,.pp,.edu__feature,.footer').some(s => { const b = s.getBoundingClientRect(); return cy > b.top && cy < b.bottom && cx > b.left && cx < b.right; });
@@ -385,4 +386,11 @@ if (document.body.dataset.page === 'report') {
   $('#rpShare').addEventListener('click', async e => {
     try { await navigator.clipboard.writeText(location.href); e.target.textContent = 'Link copied'; } catch { e.target.textContent = location.href; }
   });
+}
+
+/* ---------- footer headline: fit exactly edge to edge ---------- */
+{
+  const mark = $('.footer__mark'), span = $('span', mark);
+  const fit = () => { mark.style.fontSize = '100px'; const w = span.getBoundingClientRect().width; if (w) mark.style.fontSize = (100 * mark.clientWidth / w * .995).toFixed(2) + 'px'; };
+  fit(); addEventListener('resize', fit); document.fonts && document.fonts.ready.then(fit);
 }

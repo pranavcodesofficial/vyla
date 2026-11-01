@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@1,300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
 :root{
   --cream:#F4F7F8; --paper:#E6EEF2; --ink:#14232B; --mute:#68797F;
   --sage:#B5D7E3; --sage2:#5F9DB5; --moss:#1F4B5E; --brass:#B38B4D;
   --line:rgba(20,35,43,.16);
-  --serif:'Instrument Serif',Georgia,serif; --logo:'DM Serif Display',Georgia,serif; --sans:'Jost',system-ui,sans-serif;
+  --serif:'Instrument Serif',Georgia,serif; --logo:'Spectral',Georgia,serif; --sans:'Jost',system-ui,sans-serif;
   --ann:28px; --hh:72px; --pad:clamp(16px,2.2vw,32px);
   --ease:cubic-bezier(.22,.7,.1,1);
 }
@@ -622,7 +622,7 @@ html,body{overflow-x:clip}
 .mini{-webkit-backdrop-filter:blur(12px) saturate(130%);backdrop-filter:blur(12px) saturate(130%)}
 .wr__blob{transform:translateZ(0)}
 
-/* DM Serif Display logo: heavier, larger x-height than Cormorant, so set it a touch smaller */
-.header__logo{font-weight:400;font-size:38px;padding-bottom:2px}
-.curtain__mark{font-weight:400;font-size:56px}
-@media(max-width:900px){.header__logo{font-size:32px}}
+/* Spectral Light Italic logo: pointed v, fine strokes */
+.header__logo{font-weight:300;font-size:42px;padding-bottom:4px}
+.curtain__mark{font-weight:300;font-size:60px}
+@media(max-width:900px){.header__logo{font-size:34px}}

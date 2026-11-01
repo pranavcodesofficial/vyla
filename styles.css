@@ -616,3 +616,7 @@ html{overflow-x:clip}
 }
 /* clip (not hidden) so body never becomes a scroll container: keeps position:sticky working */
 html,body{overflow-x:clip}
+
+/* performance: cheaper glass, composited layers */
+.mini{-webkit-backdrop-filter:blur(12px) saturate(130%);backdrop-filter:blur(12px) saturate(130%)}
+.wr__blob{transform:translateZ(0)}

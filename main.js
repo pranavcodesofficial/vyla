@@ -110,9 +110,9 @@ if (!isHome) { document.body.classList.add('inner'); $('.curtain').remove(); }
 
 /* ---------- boot ---------- */
 window.addEventListener('load', () => {
-  setTimeout(() => { document.body.classList.remove('is-loading'); document.body.classList.add('is-ready'); }, isHome ? 1300 : 0);
+  setTimeout(() => { document.body.classList.remove('is-loading'); document.body.classList.add('is-ready'); lastKeyFrame = ''; }, isHome ? 1300 : 0);
 });
-setTimeout(() => { document.body.classList.remove('is-loading'); document.body.classList.add('is-ready'); }, 2600);
+setTimeout(() => { document.body.classList.remove('is-loading'); document.body.classList.add('is-ready'); lastKeyFrame = ''; }, 2600);
 
 /* ---------- announcement ---------- */
 {
@@ -168,15 +168,24 @@ if (wr) {
     const markup = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">${defs}${g.outerHTML.replace(/ data-d[xy]="[^"]*"/g, '')}</svg>`;
     const img = new Image();
     img.className = 'wr__blob'; img.alt = ''; img.decoding = 'async';
+    const layer = { el: img, dx: +g.dataset.dx, dy: +g.dataset.dy };
+    // rasterise the filtered SVG to a plain bitmap once, so moving it never re-runs the filter
+    img.onload = () => {
+      const w = Math.round(Math.min(2160, Math.max(1440, innerWidth) * Math.min(devicePixelRatio || 1, 1.5))), h = Math.round(w * 900 / 1440);
+      const c = document.createElement('canvas'); c.width = w; c.height = h; c.className = 'wr__blob';
+      c.getContext('2d').drawImage(img, 0, 0, w, h);
+      c.style.cssText = img.style.cssText; img.replaceWith(c); layer.el = c;
+    };
     img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(markup);
     svg.parentElement.insertBefore(img, svg);
-    layers.push({ el: img, dx: +g.dataset.dx, dy: +g.dataset.dy });
+    layers.push(layer);
   });
   svg.style.display = 'none';
   let cur = -1;
   const ease = t => t * t * (3 - 2 * t);
   wrTick = (dt) => {
     const r = wr.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > innerHeight) return;                     // off screen: no work at all
     const target = clamp(-r.top / (r.height - innerHeight));
     if (cur < 0) cur = target;
     cur += (target - cur) * (1 - Math.pow(0.0008, dt));
@@ -201,7 +210,7 @@ if (wr) {
       const tt = t * (1 - .35 * out);
       const fx = Math.sin(now * .5 + i * 1.7) * 7 * t, fy = Math.cos(now * .42 + i * 1.3) * 6 * t;   // slow living drift
       l.el.style.opacity = (clamp(t * 1.5) * (1 - out)).toFixed(3);
-      l.el.style.transform = `translate3d(${(l.dx * (1 - tt) * k + fx).toFixed(1)}px,${(l.dy * (1 - tt) * k + fy).toFixed(1)}px,0) scale(${(1 + (1 - tt) * .08 + p * .02).toFixed(4)})`;
+      l.el.style.transform = `translate3d(${(l.dx * (1 - tt) * k + fx).toFixed(1)}px,${(l.dy * (1 - tt) * k + fy).toFixed(1)}px,0) `;
     });
     const f = smooth(.6, .82, p);
     form.style.opacity = f.toFixed(3); form.style.transform = `translate3d(0,${((1 - f) * 40).toFixed(1)}px,0)`;
@@ -212,27 +221,32 @@ const wrPage = $('#wrPageForm');
 
 /* ---------- mini card ---------- */
 const mini = $('#mini');
-function miniState() { const ft = $('.footer').getBoundingClientRect().top < innerHeight - 40; mini.classList.toggle('is-on', document.body.classList.contains('is-ready') && !ft && !location.pathname.endsWith('product.html'));
+const footerEl = $('.footer'), darkEls = $$('.hero,.split2,.fq,.pp,.edu__feature,.footer');
+function miniState() { const ft = footerEl.getBoundingClientRect().top < innerHeight - 40; mini.classList.toggle('is-on', document.body.classList.contains('is-ready') && !ft && !location.pathname.endsWith('product.html'));
   // white text while the card floats over a photo, dark text over light sections
   const r = mini.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-  const overPhoto = $$('.hero,.split2,.fq,.pp,.edu__feature,.footer').some(s => { const b = s.getBoundingClientRect(); return cy > b.top && cy < b.bottom && cx > b.left && cx < b.right; });
+  const overPhoto = darkEls.some(s => { const b = s.getBoundingClientRect(); return cy > b.top && cy < b.bottom && cx > b.left && cx < b.right; });
   mini.classList.toggle('is-glass', overPhoto);
 }
 
 /* ---------- smooth scroll + frame loop ---------- */
 let lenis = null;
 if (window.Lenis && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95, smoothWheel: true });
+  // lower lerp = longer, silkier glide; touch keeps native momentum on phones
+  lenis = new Lenis({ lerp: 0.07, wheelMultiplier: 0.9, touchMultiplier: 1.4, smoothWheel: true, syncTouch: false, autoResize: true });
   $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
-    const t = $(a.getAttribute('href')); if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: -100, duration: 1.4 }); }
+    const h = a.getAttribute('href'); if (h.length < 2) return e.preventDefault(); const t = $(h); if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: -100, duration: 1.4 }); }
   }));
 }
 const lockScroll = on => { document.body.style.overflow = on ? 'hidden' : ''; if (lenis) on ? lenis.stop() : lenis.start(); };
-let last = performance.now();
+let last = performance.now(), lastKeyFrame = '';
 function loop(now) {
   const dt = Math.min(.05, (now - last) / 1000); last = now;
   if (lenis) lenis.raf(now);
-  headerState(); parallax(); if (wrTick) wrTick(dt); miniState();
+  // only touch layout when the scroll position or viewport actually changed
+  const y = lenis ? lenis.animatedScroll : scrollY, key = y + ':' + innerWidth + ':' + innerHeight;
+  if (key !== lastKeyFrame) { lastKeyFrame = key; headerState(); parallax(); miniState(); }
+  if (wrTick) wrTick(dt);
   requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);

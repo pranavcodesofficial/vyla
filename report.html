@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your water report | Vyla</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=3"></head>
+<body data-page="report"><main id="app">
+
+<!-- Intro -->
+<section class="rp-intro">
+  <div class="rp-tile rp-tile--a" data-ill="glass"></div>
+  <div class="rp-tile rp-tile--b" data-ill="leaf"></div>
+  <div class="rp-tile rp-tile--c" data-ill="drop"></div>
+  <div class="rp-tile rp-tile--d" data-ill="tub"></div>
+  <div class="rp-tile rp-tile--e" data-ill="shower"></div>
+  <div class="rp-intro__copy">
+    <h1 class="display rp-h" id="rpTitle">Here’s your water report.</h1>
+    <p class="rp-lead">Your local water may contain chlorine, heavy metals, and other contaminants that can affect the look and feel of your skin and hair over time.</p>
+    <p class="rp-go">Let’s get into it.</p>
+  </div>
+</section>
+
+<!-- Chlorine -->
+<section class="rp-split">
+  <div class="rp-split__copy">
+    <h2 class="display rp-h reveal">Chlorine:<br>the big culprit</h2>
+    <div class="rp-body reveal">
+      <p>Most municipal water systems use chlorine to disinfect water as it travels through pipes before reaching your shower.</p>
+      <p>While effective for sanitation, chlorine is highly oxidative, meaning it can strip skin and hair of their natural moisture over time.</p>
+      <p>This may contribute to:</p>
+      <ul><li>Dryness and tightness after showering</li><li>Dull, brittle or frizzy hair</li><li>Faster fading of hair colour</li><li>Irritation for sensitive skin</li></ul>
+    </div>
+  </div>
+  <div class="rp-split__art" data-ill="shower"></div>
+</section>
+
+<!-- Heavy metals -->
+<section class="rp-split rp-split--rev">
+  <div class="rp-split__art" data-ill="tub"></div>
+  <div class="rp-split__copy">
+    <h2 class="display rp-h reveal">Heavy metals:<br>the hidden factor</h2>
+    <div class="rp-body reveal">
+      <p>When we say heavy metals, we mean naturally occurring elements like lead, copper, iron and nickel. They usually reach tap water through pipe corrosion and runoff.</p>
+      <p>In shower water, they may contribute to:</p>
+      <ul><li>Mineral build-up on the scalp</li><li>Brassy or dull tones in hair</li><li>Hair that feels rough and hard to manage</li><li>A film on skin that blocks moisture</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- Results -->
+<section class="rp-results">
+  <h2 class="display rp-h reveal">Your water quality results are in</h2>
+  <p class="rp-lead reveal">These are the contaminants most commonly reported in municipal water supplies across India.</p>
+  <div class="rp-note reveal">
+    <p>We’re still adding published municipal data for PIN <b id="rpPin">your area</b>. Your full local report will reach your inbox as soon as it’s ready.</p>
+    <a href="water-report.html" class="link-u">Try a different PIN code</a>
+  </div>
+</section>
+
+<!-- Journey -->
+<section class="rp-journey">
+  <h2 class="display rp-h reveal">Your water’s journey</h2>
+  <div class="rp-orb" id="rpOrb"></div>
+  <ol class="rp-steps" id="rpSteps">
+    <li data-ill="tap" data-c="Treated at the source, water picks up chlorine to keep it safe in transit.">Water source</li>
+    <li class="rp-steps__pill" data-ill="drop" data-c="Chlorine and ageing pipes add oxidisers and trace metals along the way.">Chlorine</li>
+    <li data-ill="shower" data-c="Heat opens the cuticle and pores, so more of it reaches you.">Your shower</li>
+    <li data-ill="hair" data-c="Over time, chlorine and heavy metals strip your natural oils, dry out skin, and weaken hair.">Skin &amp; hair exposure</li>
+    <li data-ill="steam" data-c="Steam carries chlorine into the air you breathe after the shower.">Evaporation</li>
+  </ol>
+  <p class="rp-caption" id="rpCaption"></p>
+</section>
+
+<!-- What it means -->
+<section class="rp-means">
+  <div class="rp-means__img"><img src="assets/img/life-steam.jpg" alt="Woman in a steamy shower"></div>
+  <div class="rp-means__copy">
+    <h2 class="display rp-h reveal">What this means for your hair &amp; skin</h2>
+    <p class="reveal">Every unfiltered shower exposes your hair to a mix of chemicals, heavy metals and by-products. Each one seems small, but over time the effects add up: weaker hair, drier skin, and a disrupted moisture barrier.</p>
+    <span class="rp-line" aria-hidden="true"></span>
+    <p class="eyebrow">Upgrade your entire routine,<br>starting at step zero.</p>
+    <a href="product.html?f=brass" class="rp-prod">
+      <span class="rp-prod__img"><img src="assets/img/prod-brass-rain.jpg" alt=""></span>
+      <span class="card__row"><b>The Vyla Filtered Showerhead</b><span class="rate">★ 4.8 <small>(128)</small></span></span>
+      <em>Polished Brass</em><i>Rs. 4,999</i>
+    </a>
+    <a href="shop.html" class="btn btn--line rp-btn">Shop Vyla</a>
+    <button class="btn btn--line rp-btn" id="rpShare">Share your water report</button>
+  </div>
+</section>
+
+</main>
+<script src="vendor/lenis.min.js"></script>
+<script src="illustrations.js?v=3"></script>
+<script src="main.js?v=3"></script></body></html>
